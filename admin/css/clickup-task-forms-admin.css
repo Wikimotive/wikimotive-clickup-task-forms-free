@@ -1,0 +1,330 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ :root {
+    --ctf-light-txt: #d5d6d7;
+    --ctf-light-bg: #f2f2f2;
+    --ctf-light-box: #fafbfc;
+    --ctf-dark-txt: #505050;
+    --ctf-dark-bg: #1e272e;
+    --ctf-dark-box: #2b343b;
+    --ctf-purple: rgb(123, 104, 238);
+    --ctf-orange: rgb(255, 161, 47);
+    --ctf-furry: rgb(255, 87, 34);
+    --ctf-red: rgb(244, 44, 44);
+    --ctf-fushia: rgb(248, 48, 109);
+    --ctf-pink: rgb(255, 0, 252);
+    --ctf-blue: rgb(65, 105, 225);
+    --ctf-dusk: rgb(95, 129, 255);
+    --ctf-baby: rgb(10, 180, 255);
+    --ctf-sonic: rgb(8, 199, 224);
+    --ctf-seafoam: rgb(7, 160, 146);
+    --ctf-green: rgb(46, 165, 44);
+    --ctf-grey: rgb(117, 115, 128);
+    --ctf-dark: rgb(32, 32, 32);
+}
+
+/**
+ * Dash Icon
+ */
+ @font-face {
+    font-family: 'clickupicon';
+    src:    url('../../admin/css/fonts/clickupicon.eot?3ekyq3');
+    src:    url('../../admin/css/fonts/clickupicon.eot?3ekyq3#iefix') format('embedded-opentype'),
+            url('../../admin/css/fonts/clickupicon.ttf?3ekyq3') format('truetype'),
+            url('../../admin/css/fonts/clickupicon.woff?3ekyq3') format('woff'),
+            url('../../admin/css/fonts/clickupicon.svg?3ekyq3#clickupicon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.dashicons-clickup:before {
+    display: inline-block;
+    font-family: 'clickupicon';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content:"\e900";
+}
+
+/**
+ * Admin Settings Page
+ * .toplevel_page_clickup is the precursor to all settings pages to access Wordpress elements
+ */
+
+body[class*="toplevel_page_clickup"], body[class*="clickup-forms_page_"] {
+    background-color: var(--ctf-dark-bg) !important;
+    -webkit-box-shadow: inset 0px 0px 8px rgba(0,0,0,0.5);
+            box-shadow: inset 0px 0px 8px rgba(0,0,0,0.5);
+    font-family: "Proxima Nova", Arial, serif;
+    color: var(--ctf-light-txt) !important;
+}
+
+[class*="toplevel_page_clickup"] #adminmenuback {
+    -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+            box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+}
+
+[class*="clickup-forms_page_"] h1, [class*="clickup-forms_page_"] h2 {
+    font-weight: 700;
+}
+
+[class*="clickup-forms_page_"] h1, [class*="clickup-forms_page_"] h2, [class*="clickup-forms_page_"] h3, [class*="clickup-forms_page_"] h4, [class*="clickup-forms_page_"] h5, [class*="clickup-forms_page_"] h6, [class*="clickup-forms_page_"] label {
+    color: var(--ctf-light-txt);
+    font-weight: 500;
+}
+
+[class*="clickup-forms_page_"] .description {
+    color: var(--ctf-light-txt);
+}
+
+[class*="clickup-forms_page_"] h1 {
+    font-size: 30px;
+}
+
+[class*="clickup-forms_page_"] h2 {
+    font-size: 25px;
+}
+
+[class*="clickup-forms_page_"] h3 {
+    font-size: 20px;
+}
+
+.ctf-admin-title {
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.ctf-rainbow {
+    background: -webkit-linear-gradient(15deg, var(--ctf-pink), var(--ctf-orange), var(--ctf-purple), var(--ctf-baby) );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ctf-admin-title {
+    font-weight: 500;
+    font-size: 21px;
+}
+
+.ctf-admin-container {
+    background-color: var(--ctf-dark-box);
+    border-radius: 6px;
+    min-height: 24px;
+    height: auto;
+    margin-top: 20px;
+    width: calc(100% - 100px);
+    padding: 40px;
+    border: 1px solid #2b343b;
+    -webkit-box-shadow: 0 0 10px 0 rgba(117,86,86,.2);
+            box-shadow: 0 0 10px 0 rgba(117,86,86,.2);
+}
+
+.ctf-border-bottom {
+    border: 1px solid #1e272e;
+}
+
+.ctf-field-row th {
+    color: var(--ctf-light-txt) !important
+}
+
+.ctf-input {
+    color: #d5d6d7 !important;
+    background-color: transparent !important;
+    border: 1px solid var( --ctf-dark-box ) !important;
+}
+
+.ctf-input::-webkit-input-placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+.ctf-input::-moz-placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+.ctf-input:-ms-input-placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+.ctf-input::-ms-input-placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+.ctf-input::placeholder {
+    color: rgba(255,255,255,.4);
+}
+
+.ctf-input:hover, .ctf-input:focus, .ctf-input:focus-within, .ctf-input:active  {
+    border: 1px solid var( --ctf-dark-bg ) !important;
+    outline: none !important;
+    -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+}
+
+.ctf-submit-button-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.button.ctf-submit-button {
+    -webkit-transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    -o-transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border:none;
+    border-radius: 3px;
+    background-color: rgb(27, 188, 156);
+    cursor: pointer;
+    color: #fff;
+    margin-right: 20px;
+}
+.button.ctf-submit-button:hover, .button.ctf-submit-button:active, .button.ctf-submit-button:focus, .button.ctf-submit-button:focus-within {
+    -webkit-box-shadow: 0 0 0 2px rgb(27, 188, 156);
+            box-shadow: 0 0 0 2px rgb(27, 188, 156);
+    background-color: rgb(27, 188, 156) !important;
+    color: #fff;
+    outline: none !important;
+}
+
+.button.ctf-get-token {
+    -webkit-transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    -o-transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    transition: all .2s cubic-bezier(.785,.135,.15,.86) 0s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border:none;
+    border-radius: 3px;
+    background-color: rgb(124, 77, 255) !important;
+    cursor: pointer;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.button.ctf-get-token:hover, .button.ctf-get-token:active, .button.ctf-get-token:focus, .button.ctf-get-token:focus-within {
+    -webkit-box-shadow: 0 0 0 2px rgb(124, 77, 255);
+            box-shadow: 0 0 0 2px rgb(124, 77, 255);
+    background-color: rgb(124, 77, 255) !important;
+    color: #fff;
+    outline: none !important;
+}
+
+.ctf-error-message {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0 16px;
+    border-left: 4px solid var(--ctf-red);
+    border-radius: 3px;
+    background-color: var(--ctf-light-box);
+    color: var(--ctf-dark-txt) !important;
+}
+
+.ctf-success-message {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0 16px;
+    border-left: 4px solid var(--ctf-green);
+    border-radius: 3px;
+    background-color: var(--ctf-light-box);
+    color: var(--ctf-dark-txt) !important;
+}
+
+.ctf-error-message p, .ctf-success-message p {
+    font-weight: bold;
+    line-height: 2.15384615;
+    margin: 0;
+}
+
+.ctf-form-selector-container {
+    display: block;
+    max-width: 100%;
+    padding: 0 12px;
+}
+
+.ctf-form-selector-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    margin: 0 -12px;
+}
+
+.ctf-form-selector-column-3rd {
+    width: calc(33.33% - 24px);
+    padding: 12px;
+    margin: 0;
+}
+
+.ctf-selector-label {
+    font-weight: bold;
+}
+
+.ctf-label-desc {
+    font-style: italic;
+}
+
+.rwmb-label {
+    width: calc( 25% - 1rem ) !important;
+    margin-right: 1rem !important;
+}
+
+.ctf-list {
+    border-radius: 6px;
+    border: 1px solid var(--ctf-purple);
+    padding: 0px 12px 12px 12px;
+    line-height: 1.5;
+}
+
+.ctf-list dt {
+    font-size: 20px;
+    margin: 9px 0px 6px 0px;
+    border-bottom: 1px solid var(--ctf-grey);
+}
+.ctf-list dd {
+    font-size: 15px;
+}
+
+.ctf-help-img {
+    display: inline-block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.ctf-help-img.left {
+    text-align: left;
+    margin: 0.375em 1.75em 1.75em 0;
+}
+
+.ctf-help-img.right {
+    text-align: right;
+    margin: 0.375em 0 1.75em 1.75em;
+}

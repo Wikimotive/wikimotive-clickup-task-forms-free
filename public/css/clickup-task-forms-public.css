@@ -1,0 +1,55 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.ctf-form-wrapper {
+    display: block;
+}
+
+.ctf-form select {
+    width: 100%;
+}
+
+.ctf-form input, .ctf-form select {
+    margin-bottom: 6px;
+}
+
+.ctf-form input[type="submit"] {
+    margin-top: 6px;
+}
+
+.ctf-required {
+    color: #cc0000;
+}
+
+.ctf-legend {
+    font-size: 85%;
+}
+
+.ctf-legend p:not(:last-child) {
+    margin: 3px 0px 6px 0px !important;
+}
+
+.ctf-legend p:last-child {
+    margin: 3px 0px !important;
+}
+
+.ctf-submit-error {
+    border-radius: 6px;
+    border: 1px solid #cc0000;
+    background: #ff7070;
+    padding: 9px;
+    color: #4e0000;
+    text-align: center;
+}
+
+.ctf-submit-success {
+    border-radius: 6px;
+    border: 1px solid #007c46;
+    background: #79c4a4;
+    padding: 9px;
+    color: #004326;
+    font-weight: bold;
+    text-align: center;
+}
