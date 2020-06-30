@@ -64,7 +64,7 @@
  * .toplevel_page_clickup is the precursor to all settings pages to access Wordpress elements
  */
 
-body[class*="toplevel_page_clickup"], body[class*="clickup-forms_page_"] {
+[class*="toplevel_page_clickup"] #wpwrap, [class*="clickup-forms_page_"] #wpwrap {
     background-color: var(--ctf-dark-bg) !important;
     -webkit-box-shadow: inset 0px 0px 8px rgba(0,0,0,0.5);
             box-shadow: inset 0px 0px 8px rgba(0,0,0,0.5);
@@ -90,16 +90,26 @@ body[class*="toplevel_page_clickup"], body[class*="clickup-forms_page_"] {
     color: var(--ctf-light-txt);
 }
 
-[class*="clickup-forms_page_"] h1 {
+[class*="clickup-forms_page_"] h1, .toplevel_page_clickup h1 {
     font-size: 30px;
 }
 
-[class*="clickup-forms_page_"] h2 {
+[class*="clickup-forms_page_"] h2, .toplevel_page_clickup h2 {
     font-size: 25px;
 }
 
-[class*="clickup-forms_page_"] h3 {
+[class*="clickup-forms_page_"] h3, .toplevel_page_clickup h3 {
     font-size: 20px;
+}
+
+[class*="clickup-forms_page_"] a, .toplevel_page_clickup a {
+    color: rgb(8, 199, 224);
+    color: var(--ctf-sonic);
+}
+
+[class*="clickup-forms_page_"] a:hover, .toplevel_page_clickup a:hover {
+    color: rgb(10, 180, 255);
+    color: var(--ctf-baby);
 }
 
 .ctf-admin-title {
