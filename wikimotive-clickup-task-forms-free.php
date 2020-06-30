@@ -8,7 +8,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Wikimotive's Task Forms for ClickUp - Free
- * Plugin URI:        https://github.com/apratt86/clickup-task-forms-free
+ * Plugin URI:        https://github.com/Wikimotive/wikimotive-clickup-task-forms-free
  * Description:       This plugin allows you to add Task Submission Forms for ClickUp to your Wordpress website via the use of shortcodes and ClickUp's Cloud API Connection.
  * Version:           1.0.0
  * Author:            Aaron Pratt
