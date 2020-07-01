@@ -10,6 +10,7 @@
  * @subpackage Clickup_Task_Forms/admin/partials
  */
 
+
 function ctf_form_settings() {
     add_meta_box(
         'ctf_form_settings', // string $id,
@@ -23,7 +24,6 @@ function ctf_form_settings() {
 }
 
 add_action('add_meta_boxes', 'ctf_form_settings');
-
 
 function ctf_form_fields( $post ) {
     
@@ -40,11 +40,11 @@ function ctf_form_fields( $post ) {
             <select name="ctf_form_settings[team]" id="ctf_form_settings[team]">
                 <option value="">Clear Selection &times;</option>
                 <?php
-                    $team_value = ( isset(get_post_meta( $post->ID, 'ctf_form_settings', true )['team']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['team'] : '';
+                    $team_value = ( isset( get_post_meta( $post->ID, 'ctf_form_settings', true )['team']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['team'] : '';
 
                     if ( empty( $team_value ) ) :
                         // If value is empty use this method, else just print the option
-                        $teams = new ctfAPICall( 'team', 'GET', true );
+                        $teams = new ctfAPICall( 'team' );
                         $teams_list = ctf_make_options( $teams->response(), 'id', 'name');
                         foreach( $teams_list as $team_id => $team_name ) :
                             $team_val = json_encode( [$team_id => $team_name] );
@@ -66,10 +66,10 @@ function ctf_form_fields( $post ) {
                 <select name="ctf_form_settings[space]" id="ctf_form_settings[space]">
                     <option value="">Clear Selection &times;</option>
                     <?php
-                        $space_value = ( isset(get_post_meta( $post->ID, 'ctf_form_settings', true )['space']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['space'] : '';
+                        $space_value = ( isset( get_post_meta( $post->ID, 'ctf_form_settings', true )['space']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['space'] : '';
 
                         if ( empty( $space_value ) ) :
-                            $spaces = new ctfAPICall( "team/{$team_value_id}/space?archive=false", 'GET', true );
+                            $spaces = new ctfAPICall( "team/{$team_value_id}/space?archive=false" );
                             $spaces_list = ctf_make_options( $spaces->response(), 'id', 'name');
                             foreach( $spaces_list as $space_id => $space_name ) :
                                 $space_val = json_encode( [$space_id => $space_name] );
@@ -92,10 +92,10 @@ function ctf_form_fields( $post ) {
                 <select name="ctf_form_settings[list]" id="ctf_form_settings[list]">
                     <option value="">Clear Selection &times;</option>
                     <?php
-                        $list_value = ( isset(get_post_meta( $post->ID, 'ctf_form_settings', true )['list']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['list'] : '';
+                        $list_value = ( isset( get_post_meta( $post->ID, 'ctf_form_settings', true )['list']) ) ? get_post_meta( $post->ID, 'ctf_form_settings', true )['list'] : '';
                         
                         // https://api.clickup.com/api/v2/space/space_id/list?archived=false
-                        $folderless = new ctfAPICall( "space/{$space_value_id}/list?archive=false", 'GET', true );
+                        $folderless = new ctfAPICall( "space/{$space_value_id}/list?archive=false" );
                         $folderless_list = ctf_make_options( $folderless->response(), 'id', 'name' );
                         
                         if ( empty( $list_value ) ) :
@@ -105,14 +105,14 @@ function ctf_form_fields( $post ) {
                             endforeach;
 
                             // https://api.clickup.com/api/v2/space/space_id/folder?archived=false
-                            $folders = new ctfAPICall( "space/{$space_value_id}/folder?archive=false", 'GET', true );
+                            $folders = new ctfAPICall( "space/{$space_value_id}/folder?archive=false" );
                             $folder_list = ctf_make_options( $folders->response(), 'id', 'name' );
 
                             foreach( $folder_list as $folder_id => $folder_name ) :
                                 echo "<option value='NULL'>Folder: {$folder_name}</option>";
 
                                 // https://api.clickup.com/api/v2/folder/folder_id/list?archived=false
-                                $folder_sublists = new ctfAPICall( "folder/{$folder_id}/list?archived=false", 'GET', true );
+                                $folder_sublists = new ctfAPICall( "folder/{$folder_id}/list?archived=false" );
                                 $folder_sublists_items = ctf_make_options( $folder_sublists->response(), 'id', 'name' );
                                 foreach ( $folder_sublists_items as $folder_sublist_id => $folder_sublist_name ) :
                                     $folder_sublist_val = json_encode( [ $folder_sublist_id => $folder_sublist_name ] );
@@ -131,16 +131,18 @@ function ctf_form_fields( $post ) {
     <?php
 }
 
-function ctf_get_spaces() {
-    if ( isset( $_POST['get_spaces'] ) ) {
-        echo 'Yup';
-    }
-}
 
+/**
+ * Meta Boxes
+ */
 add_filter( 'rwmb_meta_boxes', 'ctf_form_builder_meta_boxes' );
 function ctf_form_builder_meta_boxes( $meta_boxes ) {
 
+    /** Prefix Global */
     $prefix = 'ctf_form_settings_';
+    /**
+     * Advertisements and Survey Info
+     */
 
     $feedback_html = '<h4>Premium Features Coming Soon!</h4>';
     $feedback_html .= '
@@ -172,6 +174,9 @@ function ctf_form_builder_meta_boxes( $meta_boxes ) {
         ),
     );
 
+    /**
+     * Form Design
+     */
 
     $meta_boxes[] = array(
         'title' => 'Form Design Settings',
@@ -202,6 +207,10 @@ function ctf_form_builder_meta_boxes( $meta_boxes ) {
             ),
         ),
     );
+
+    /**
+     * Form Submit Settings
+     */
 
     $meta_boxes[] = array(
         'title'      => 'Form Submit Settings',
@@ -278,12 +287,27 @@ function ctf_form_builder_meta_boxes( $meta_boxes ) {
     return $meta_boxes;
 }
 
+
 function ctf_save_fields( $post_id ) {
     if ( array_key_exists( 'ctf_form_settings', $_POST ) ) {
+
+        $allowed_keys = [ 'team', 'space', 'list' ];
+        $ctf_form_settings = $_POST['ctf_form_settings'];
+
+        if ( is_array( $ctf_form_settings ) ) :
+            foreach( $ctf_form_settings as $field_key => $field_value ) :
+                if ( ! in_array( $field_key, $allowed_keys ) ) :
+                    unset( $ctf_form_settings[$field_key] );
+                else:
+                    $ctf_form_settings[$field_key] = sanitize_text_field( $field_value );
+                endif;
+            endforeach;
+        endif;
+
         update_post_meta(
             $post_id, // int $post_id
             'ctf_form_settings', // string $meta_key
-            $_POST['ctf_form_settings'] // mixed $meta_value,
+            $ctf_form_settings // mixed $meta_value,
             // mixed $prev_value = ''
         );
     }
