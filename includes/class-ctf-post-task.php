@@ -249,8 +249,10 @@ class ctfPostTask extends ctfConfig {
             'custom_fields' => $custom_fields,
         ];
 
+        /** Create a JSON Post Body */
         $json_body = json_encode( $body );
         
+        /** HTTP Post Arguments */
         $args = array(
             'body'        => $json_body,
             'timeout'     => '5',
@@ -264,11 +266,10 @@ class ctfPostTask extends ctfConfig {
             'cookies'     => array(),
         );
 
+        /** Send the task to ClickUp */
         $response = wp_remote_post( "https://api.clickup.com/api/v2/list/{$this->listID}/task", $args );
 
-        /**
-         * Response Message
-         */
+        /** Response Message */
         if ( ! isset( $response['err'] ) ) :
             echo '<div class="ctf-submit-success">Created Task Successfully</div>';
         else:
