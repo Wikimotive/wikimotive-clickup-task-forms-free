@@ -156,7 +156,7 @@ class ctfPostTask extends ctfConfig {
         $cookie_key = 'Now listen here, you hacking bois can just get along little doggie!';
         $cookie = hash( 'ripemd160', $_SERVER['HTTP_USER_AGENT'] . $cookie_key );
 
-        if ( $cookie !== $form_data['ctf_validate'] || $cookie !== $_COOKIE['ctf_session'] || ! isset( $form_data['ctf_validate'] ) ) :
+        if ( ! isset( $form_data['ctf_validate'] ) || ! isset( $_COOKIE['ctf_session'] ) || $cookie !== $form_data['ctf_validate'] || $cookie !== $_COOKIE['ctf_session'] ) :
             echo "<script>alert('Session Expired or Unauthorized form submission.');</script>";
             return;
         endif;
