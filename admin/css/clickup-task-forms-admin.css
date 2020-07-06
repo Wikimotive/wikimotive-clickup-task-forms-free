@@ -108,8 +108,8 @@
 }
 
 [class*="clickup-forms_page_"] a:hover, .toplevel_page_clickup a:hover {
-    color: rgb(10, 180, 255);
-    color: var(--ctf-baby);
+    color: rgb(123, 104, 238);
+    color: var(--ctf-purple);
 }
 
 .ctf-admin-title {

@@ -36,6 +36,18 @@ class ctfPostTask extends ctfConfig {
         return get_post_meta( $this->formID, 'ctf_form_settings_custom_fields', true );
     }
 
+    public function getCustomFieldIds() {
+        $custom_fields = $this->getCustomFields();
+
+        $c_field_ids = [];
+        foreach ( $custom_fields as $field_data ) :
+            if ( isset( $field_data['id'] ) ) :
+                array_push( $c_field_ids, $field_data['id'] );
+            endif;
+        endforeach;
+        return $c_field_ids;
+    }
+
     public function outputCustomFields() {
         if ( false !== $this->customFields ) :
             $fpre = "ctf_{$this->formID}";
@@ -99,12 +111,13 @@ class ctfPostTask extends ctfConfig {
 
         $vars = [];
 
+        $vars["{%assignees%}"] = '';
         foreach ( $replace_vars as $var ) :
             if ( 'assignees' === $var ) :
                 foreach( $form_data['assignees'] as $user ) :
                     $vars["{%assignees%}"] .= "{$user}, ";
                 endforeach;
-            else:
+            else :
             $vars["{%$var%}"] = $form_data["{$var}"];
             endif;
         endforeach;
@@ -128,8 +141,12 @@ class ctfPostTask extends ctfConfig {
     public function sendTask( $form_data ) {
 
         /**
-         * Field ID => Error Message
+         *  ------------------------
+         * | Form Field Validations |
+         *  ------------------------
          */
+
+        /** Required Field Error Messages */
         $required_fields = [
             'ctf_validate' => 'Session Expired or Unauthorized form submission.',
             'assigner' => 'Name must be filled.', // Your Name
@@ -139,7 +156,7 @@ class ctfPostTask extends ctfConfig {
             'submit' => 'Task not submitted.', // The submit button
         ];
 
-        // Cookie Validation
+        /** Session Cookie Validation - Ensure submission is initiated from the browser */
         $cookie_key = 'Now listen here, you hacking bois can just get along little doggie!';
         $cookie = hash( 'ripemd160', $_SERVER['HTTP_USER_AGENT'] . $cookie_key );
 
@@ -147,6 +164,29 @@ class ctfPostTask extends ctfConfig {
             echo "<script>alert('Session Expired or Unauthorized form submission.');</script>";
             return;
         endif;
+
+        /** Field Set Validation: Ensure no other fields outside the scope of the form are being submitted */
+        $available_default_form_fields = [
+            'ctf_validate',
+            'assigner',
+            'title',
+            'priority',
+            'assignees',
+            'duedate',
+            'desc',
+            'submit'
+        ];
+        $available_custom_fields = $this->getCustomFieldIds();
+
+        $available_form_fields = array_merge( $available_default_form_fields, $available_custom_fields );
+
+        foreach ( $form_data as $form_field_id => $form_field_value ) :
+            $form_field_value = sanitize_text_field( $form_field_value );
+            if ( ! in_array( $form_field_id, $available_form_fields ) ) :
+                echo "<script>alert('Error Message: 001 - Form Field Not Allowed.');</script>";
+                return;
+            endif;
+        endforeach;
 
         /**
          * Validate the form fields if isset and not empty continue, else return.
@@ -160,25 +200,13 @@ class ctfPostTask extends ctfConfig {
         endforeach;
 
         /**
-         * Initiate the CUrl Request or API Call
+         *  -----------------------
+         * | Submission Formatting |
+         *  -----------------------
          */
-        $ch = curl_init();
 
-        /**
-         * Set the enpoint of the API Call
-         */
-        curl_setopt($ch, CURLOPT_URL, "https://api.clickup.com/api/v2/list/{$this->listID}/task");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+        /** Field Formatting */
 
-        /**
-         * Instantiating Post Data to be Sent
-         */
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-
-        /**
-         * Field Formatting
-         */
         $content_format = $this->makeTaskContent( $form_data );
         $content = ( isset( $form_data['desc'] ) ) ? $content_format . "\n### Task Description:\n" . wp_strip_all_tags( $form_data['desc'] ) : '';
 
@@ -204,9 +232,7 @@ class ctfPostTask extends ctfConfig {
             endif;
         endforeach;
 
-        /** 
-         * Field Mapping:
-         */
+        /** Field Mapping */
         $map_array = [
             "name" => sanitize_text_field( $form_data['title'] ),
             "markdown_content" => stripslashes( sanitize_textarea_field( $content ) ),
@@ -223,33 +249,47 @@ class ctfPostTask extends ctfConfig {
         $post_fields = json_encode( $map_array );
 
         /**
+         * |||||||||||||||||||||||||||
+         * REPLACE WITH WP_REMOTE_POST
+         * |||||||||||||||||||||||||||
+         * VVVVVVVVVVVVVVVVVVVVVVVVVVV
+         */
+        
+        // curl_setopt($ch, CURLOPT_URL, "https://api.clickup.com/api/v2/list/{$this->listID}/task");
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        // curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        /**
          * Set the Post Field Options
          */
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields );
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields );
 
         /**
          * Set the API Call Headers
          */
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            "Authorization: {$this->token}",
-            "Content-Type: application/json"
-        ));
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        //     "Authorization: {$this->token}",
+        //     "Content-Type: application/json"
+        // ));
 
         /**
          * The response data
          */
-        $response = curl_exec($ch); // Execute the API Call
-        curl_close($ch); // Reset the request
+        // $response = curl_exec($ch); // Execute the API Call
+        // curl_close($ch); // Reset the request
 
-        $return_data = json_decode( $response, true );
+        // $return_data = json_decode( $response, true );
 
         /**
          * Response Message
          */
-        if ( ! isset( $return_data['err'] ) ) :
-            echo '<div class="ctf-submit-success">Created Task Successfully</div>';
-        else:
-            echo "<div class='ctf-submit-error'><strong>Failed to create task. Error:</strong> {$return_data['err']} - {$return_data['ECODE']}</div>";
-        endif;
+        // if ( ! isset( $return_data['err'] ) ) :
+        //     echo '<div class="ctf-submit-success">Created Task Successfully</div>';
+        // else:
+        //     echo "<div class='ctf-submit-error'><strong>Failed to create task. Error:</strong> {$return_data['err']} - {$return_data['ECODE']}</div>";
+        // endif;
+
+
+
     }
 }
