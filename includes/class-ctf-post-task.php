@@ -134,10 +134,6 @@ class ctfPostTask extends ctfConfig {
     }
 
 
-    /**
-     * REPLACE THIS FUNCTION WITH wp_remote_post() SEE: https://developer.wordpress.org/plugins/http-api/#posting-data-to-an-api
-     */
-
     public function sendTask( $form_data ) {
 
         /**
@@ -247,6 +243,9 @@ class ctfPostTask extends ctfConfig {
         ];
 
         $post_fields = json_encode( $map_array );
+
+
+        
 
         /**
          * |||||||||||||||||||||||||||
