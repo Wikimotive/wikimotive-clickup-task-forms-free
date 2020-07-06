@@ -20,24 +20,16 @@ class ctfPostTask extends ctfConfig {
     }
 
     public function getUsers() {
-        $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://api.clickup.com/api/v2/list/{$this->listID}/member",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => false,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "GET",
-                CURLOPT_HTTPHEADER => array(
-                    "Authorization: {$this->token}",
-                ),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode( $response, true );
+        $url = "https://api.clickup.com/api/v2/list/{$this->listID}/member";
+        $args = array(
+            'headers' => array(
+                'Authorization' => $this->token
+            )
+        );
+        $response = wp_remote_get( $url, $args );
+        return json_decode( wp_remote_retrieve_body( $response ), true );
+
     }
 
     public function getCustomFields() {
@@ -127,6 +119,11 @@ class ctfPostTask extends ctfConfig {
         preg_match_all($regex, $str, $matches);
         return $matches[1];
     }
+
+
+    /**
+     * REPLACE THIS FUNCTION WITH wp_remote_post() SEE: https://developer.wordpress.org/plugins/http-api/#posting-data-to-an-api
+     */
 
     public function sendTask( $form_data ) {
 

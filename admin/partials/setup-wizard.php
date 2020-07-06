@@ -16,27 +16,9 @@
  */
 
 function ctf_get_token( $client_id = null, $client_secret = null, $code = null ) {
-	if ( isset($client_id) && isset($client_secret) && isset($code) ) :
-		$curl = curl_init();
-		curl_setopt_array(
-			$curl,
-			array(
-				CURLOPT_URL => "https://app.clickup.com/api/v2/oauth/token?client_id={$client_id}&client_secret={$client_secret}&code={$code}",
-				CURLOPT_RETURNTRANSFER => true,
-				CURLOPT_ENCODING => "",
-				CURLOPT_MAXREDIRS => 10,
-				CURLOPT_TIMEOUT => 0,
-				CURLOPT_FOLLOWLOCATION => false,
-				CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-				CURLOPT_CUSTOMREQUEST => "POST",
-				CURLOPT_HTTPHEADER => array(),
-			)
-		);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-		return json_decode( $response, true );
+    if ( isset($client_id) && isset($client_secret) && isset($code) ) :
+        $response = wp_remote_retrieve_body( wp_remote_post( "https://app.clickup.com/api/v2/oauth/token?client_id={$client_id}&client_secret={$client_secret}&code={$code}" ) );
+        return json_decode( $response, true );
 	endif;
 }
 
