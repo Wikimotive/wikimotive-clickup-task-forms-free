@@ -263,7 +263,7 @@ class ctfPostTask extends ctfConfig {
                 'Authorization' => $this->token,
                 'Content-Type' => 'application/json',
             ),
-            'cookies'     => array(),
+            'cookies' => array(),
         );
 
         /** Send the task to ClickUp */

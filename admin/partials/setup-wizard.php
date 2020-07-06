@@ -169,7 +169,7 @@ function ctf_options_page_html() {
         do_settings_sections( 'ctf' );
         // output save settings button
         echo '<div class="ctf-submit-button-wrapper">';
-            submit_button( 'Update', 'ctf-submit-button', 'submit', false );
+            submit_button( 'Save', 'ctf-submit-button', 'submit', false );
             
             if ( isset( $options['ctf_client_id'] ) && isset( $options['ctf_client_secret'] ) && !empty( $options['ctf_client_id'] ) && !empty( $options['ctf_client_secret'] ) ) :
                 ctf_get_token_button( $options['ctf_client_id'] );
@@ -194,7 +194,7 @@ function ctf_access_token_cb( $args ) {
     $access_token = null;
 
     if ( isset( $access_response['access_token'] ) ) :
-        $ctf_success_message = __( "SUCCESS: Click 'Update' to commit changes | Your New Access Token is: {$access_response['access_token']}", 'ctf_options');
+        $ctf_success_message = __( "SUCCESS: Click 'Save' to commit changes | Your New Access Token is: {$access_response['access_token']}", 'ctf_options');
         printf( '<div class="ctf-success-message"><p>%1$s</p></div>', esc_html( $ctf_success_message ) );
         $access_token = sanitize_text_field( $access_response['access_token'] );
     endif;

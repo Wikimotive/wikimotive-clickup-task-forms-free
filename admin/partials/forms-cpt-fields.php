@@ -259,13 +259,13 @@ function ctf_form_builder_meta_boxes( $meta_boxes ) {
                             'email' => 'Email Address',
                         ),
                     ),
-                    array(
-                        'id' => 'required',
-                        'name' => 'Require this field?',
-                        'type' => 'switch',
-                        'on_label' => 'Yes',
-                        'off_label' => 'No',
-                    ),
+                    // array(
+                    //     'id' => 'required',
+                    //     'name' => 'Require this field?',
+                    //     'type' => 'switch',
+                    //     'on_label' => 'Yes',
+                    //     'off_label' => 'No',
+                    // ),
                     array(
                         'id' => 'posts_to',
                         'name' => 'Posts To',
