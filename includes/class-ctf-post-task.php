@@ -228,8 +228,15 @@ class ctfPostTask extends ctfConfig {
             endif;
         endforeach;
 
+        /**
+         *  -----------------------------------
+         * | HTTP API Post the Task to ClickUp |
+         *  -----------------------------------
+         */
+
+
         /** Field Mapping */
-        $map_array = [
+        $body = [
             "name" => sanitize_text_field( $form_data['title'] ),
             "markdown_content" => stripslashes( sanitize_textarea_field( $content ) ),
             "assignees" => $assignees,
@@ -242,53 +249,30 @@ class ctfPostTask extends ctfConfig {
             'custom_fields' => $custom_fields,
         ];
 
-        $post_fields = json_encode( $map_array );
-
-
+        $json_body = json_encode( $body );
         
+        $args = array(
+            'body'        => $json_body,
+            'timeout'     => '5',
+            'redirection' => '5',
+            'httpversion' => '1.0',
+            'blocking'    => true,
+            'headers'     => array(
+                'Authorization' => $this->token,
+                'Content-Type' => 'application/json',
+            ),
+            'cookies'     => array(),
+        );
 
-        /**
-         * |||||||||||||||||||||||||||
-         * REPLACE WITH WP_REMOTE_POST
-         * |||||||||||||||||||||||||||
-         * VVVVVVVVVVVVVVVVVVVVVVVVVVV
-         */
-        
-        // curl_setopt($ch, CURLOPT_URL, "https://api.clickup.com/api/v2/list/{$this->listID}/task");
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        // curl_setopt($ch, CURLOPT_HEADER, FALSE);
-
-        /**
-         * Set the Post Field Options
-         */
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, $post_fields );
-
-        /**
-         * Set the API Call Headers
-         */
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        //     "Authorization: {$this->token}",
-        //     "Content-Type: application/json"
-        // ));
-
-        /**
-         * The response data
-         */
-        // $response = curl_exec($ch); // Execute the API Call
-        // curl_close($ch); // Reset the request
-
-        // $return_data = json_decode( $response, true );
+        $response = wp_remote_post( "https://api.clickup.com/api/v2/list/{$this->listID}/task", $args );
 
         /**
          * Response Message
          */
-        // if ( ! isset( $return_data['err'] ) ) :
-        //     echo '<div class="ctf-submit-success">Created Task Successfully</div>';
-        // else:
-        //     echo "<div class='ctf-submit-error'><strong>Failed to create task. Error:</strong> {$return_data['err']} - {$return_data['ECODE']}</div>";
-        // endif;
-
-
-
+        if ( ! isset( $response['err'] ) ) :
+            echo '<div class="ctf-submit-success">Created Task Successfully</div>';
+        else:
+            echo "<div class='ctf-submit-error'><strong>Failed to create task. Error:</strong> {$response['err']} - {$response['ECODE']}</div>";
+        endif;
     }
 }
