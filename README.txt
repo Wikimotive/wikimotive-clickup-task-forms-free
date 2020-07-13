@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 This plugin allows you to add Task Submission Forms for ClickUp to your Wordpress website via the use of shortcodes and ClickUp's Cloud API Connection.
 
 == Description ==
-## What does this plugin do?
+### What does Wikimotive's Task Forms for ClickUp plugin do?
 This plugin connects your Wordpress site to your ClickUp tasks board via their Cloud API. You can create custom forms and format them to submit tasks to a selected ClickUp task list.
 
 Maybe you want a support ticketing system for your site, or you have a dashboard for your employees and would like to assign specially formatted tasks to your team members. You can do that with this plugin.
