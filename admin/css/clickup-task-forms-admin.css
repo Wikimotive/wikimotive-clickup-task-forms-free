@@ -63,6 +63,15 @@
  * Admin Settings Page
  * .toplevel_page_clickup is the precursor to all settings pages to access Wordpress elements
  */
+.notice-ctf {
+    border-left-color: rgb(123, 104, 238) !important;
+    border-left-color: var(--ctf-purple) !important;
+}
+
+[class*="toplevel_page_clickup"] .notice, [class*="clickup-forms_page_"] .notice {
+    color: #505050 !important;
+    color: var(--ctf-dark-txt) !important;
+}
 
 [class*="toplevel_page_clickup"] #wpwrap, [class*="clickup-forms_page_"] #wpwrap {
     background-color: var(--ctf-dark-bg) !important;
