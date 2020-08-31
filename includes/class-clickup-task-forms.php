@@ -129,6 +129,10 @@ class Clickup_Task_Forms {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-functions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/forms-post-type.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/forms-cpt-fields.php';
+		/**
+		 * @since 1.0.1
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/admin-messages.php';
 
 		/** 
 		 * Load the new Include Files
